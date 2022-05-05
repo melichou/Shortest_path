@@ -22,5 +22,6 @@ class Point{
     public function getAxeY() : int{
         return $this->axeY;
     }
+
 }
 ?>
