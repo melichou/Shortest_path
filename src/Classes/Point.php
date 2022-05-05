@@ -5,11 +5,16 @@ class Point{
     private int $axeY;
     private array $position;
 
+    //Constructor
     public function __construct(int $axeX, int $axeY){
         $this->axeX = $axeX;
         $this->axeY = $axeY;
         $this->position[0] = $axeX;
         $this->position[1] = $axeY;
+    }
+    //Getters
+    public function getPosition() : array{
+        return $this->position; 
     }
 }
 ?>
