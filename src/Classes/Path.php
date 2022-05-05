@@ -9,5 +9,6 @@ class Path{
         $pos = $point->getPosition();
         $this->path += $pos;
     }
+    
 }
 ?>
