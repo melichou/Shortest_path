@@ -10,6 +10,4 @@ class Path{
         $this->path += $pos;
     }
 }
-
-
 ?>
