@@ -16,5 +16,12 @@ class Point{
     public function getPosition() : array{
         return $this->position; 
     }
+    public function getAxeX() : int{
+        return $this->axeX;
+    }
+    public function getAxeY() : int{
+        return $this->axeY;
+    }
+
 }
 ?>

@@ -10,10 +10,12 @@ class Path{
         $this->path[] = $start->getPosition();
         $this->map = $map;
     }
+
     //Getters
     public function getPath() : array{
         return $this->path;
     }
+
     //Functions
     public function addPoint(Point $nextpoint, Point $currentpoint){
         //Get position of the points as an array
@@ -44,6 +46,5 @@ class Path{
         }
         
     }
-
 }
 ?>
