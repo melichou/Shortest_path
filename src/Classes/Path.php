@@ -21,8 +21,12 @@ class Path{
         //Get position of the points as an array
         $currentpos = $currentpoint->getPosition();
         $nextpos = $nextpoint->getPosition();
-        //Get map in array
+
+        //Get map in array and positions
         $maparray = $this->map->getMapArray();
+        $mapX = count($maparray);
+        $mapY = count($maparray[0]);
+      
         //Setting available points to add 
         $points = [
             [$currentpos[0] - 1, $currentpos[1]],
@@ -32,7 +36,8 @@ class Path{
         ];
 
         //checking if next point is in map & empty
-        if (in_array($nextpos,$points) && in_array($nextpos,$maparray) ){
+        if (in_array($nextpos,$points) && $nextpos[0] <= $mapX && $nextpos[1] <= $mapY ){
+
             //checking if point isn't already in path
             if (!in_array($nextpos,$this->path)){
                 $this->path[] = $nextpos;
