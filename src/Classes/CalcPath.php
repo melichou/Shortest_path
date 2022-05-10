@@ -59,7 +59,7 @@ class CalcPath{
                         $valid = new Point($point[0], $point[1]);
                         unset($points);
                         var_dump($valid);
-                        $currentpath->addPoint($valid);
+                        $this->addPoints($valid, $currentpath);
 
                         //checking if valable point is endpos
                         if ($valid->getPosition() == $endpos){
