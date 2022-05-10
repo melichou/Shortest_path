@@ -24,5 +24,4 @@ $short = $calc->addPoints($start,$end,$path);
 var_dump($short);
 
 
-
 ?>

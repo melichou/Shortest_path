@@ -70,11 +70,7 @@ class CalcPath{
                 $path = [];
                 unset($currentpos);
                 $this->addPoints($valid, $endpoint, $currentpath);
-            }    
-            
-
-            
-
+            } 
         } 
     }
         
@@ -111,6 +107,7 @@ class CalcPath{
             return $shortest;
         }
 
+
         if($point->getAxeX() == $end->getAxeX() && $point->getAxeY() == $end->getAxeY()){
             $shortest = $path;
             return $path;
@@ -142,8 +139,6 @@ class CalcPath{
             $this->testGetShortestPath($valid, $end, $path);
         }
 
-
-    
     }
 }
 ?>
