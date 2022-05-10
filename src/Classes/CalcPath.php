@@ -22,10 +22,10 @@ class CalcPath{
     }
 
     //Functions 
-    public function addPoints(Point $thispoint, Path $currentpath){
+    public function addPoints(Point $thispoint, Point $endpoint, Path $currentpath){
         //Getting position of current point
         $currentpos = $thispoint->getPosition();
-        $endpos = $this->endpoint->getPosition();
+        $endpos = $endpoint->getPosition();
 
         //Getting map in array
         $maparray = $this->map->getMapArray();
@@ -40,41 +40,45 @@ class CalcPath{
             [$currentpos[0], $currentpos[1] - 1],
             [$currentpos[0], $currentpos[1] + 1],
         ];
-        //var_dump($points);
 
         //Treatment 
         foreach ($points as $point){
+            $test = new Point($point[0], $point[1]);
             if ($point[0] < 0 || $point[1] < 0 || $point[0] >= count($maparray) || $point[1] >= count($maparray[0])){
                 continue;
             }
-            else {
-                if (($maparray[$point[0]][$point[1]]) == 0){
-                    continue;
-                }
-                else {
-                    if(in_array($point,$path)){
-                        continue;
-                    }
-                    else {
-                        $valid = new Point($point[0], $point[1]);
-                        unset($points);
-                        var_dump($valid);
-                        $this->addPoints($valid, $currentpath);
-
-                        //checking if valable point is endpos
-                        if ($valid->getPosition() == $endpos){
-                            $this->currentpath = $currentpath;
-                            return $currentpath;
-                        }
-                        else {
-                            var_dump($currentpath);
-                            $this->addPoints($valid,$currentpath);
-                        }
-                    }
-                } 
+            if (($maparray[$point[0]][$point[1]]) == 0){
+                continue;
             }
-        }
+                
+            if(in_array($test, $currentpath->getPath())){
+                continue;
+            }
+            if($test === $endpoint){
+                $valid = $test;
+                $currentpath->addPoint($valid);
+                $this->currentpath = $currentpath;
+                var_dump($currentpath);
+                return $currentpath;
+
+            }
+            else{
+                $valid = $test;
+                $currentpath->addPoint($valid);
+                var_dump($currentpath);
+                unset($points);
+                $path = [];
+                unset($currentpos);
+                $this->addPoints($valid, $endpoint, $currentpath);
+            }    
+            
+
+            
+
+        } 
     }
+        
+    
     
 
     public function shortestPath(Path $currentpath){
@@ -95,7 +99,7 @@ class CalcPath{
         else {
             $this->shortestPath = $currentpath;
             $newpath = new Path($this->startpoint);
-            $this->addPoints($this->startpoint,$newpath);
+            $this->addPoints($this->startpoint,$this->endpoint,$newpath);
             $this->shortestPath($this->currentpath);
         }
         
@@ -133,7 +137,8 @@ class CalcPath{
                 continue;
             }
             $valid = new Point($point[0],$point[1]);
-
+            $path->addPoint($valid);
+            var_dump($valid);
             $this->testGetShortestPath($valid, $end, $path);
         }
 
