@@ -11,7 +11,6 @@ $map = new Map([
     [1,1,1,1,1],
     [1,1,0,0,1],
     [0,1,1,0,1],
-    [0,1,1,1,1],
     [1,1,0,1,1],
     [1,1,1,1,0],
 ]);
@@ -21,8 +20,8 @@ $end = new Point(1,0);
 $calc = new CalcPath($map,$start,$end);
 $path = new Path($start);
 
-$short = $calc->testGetShortestPath($start, $end, $path);
-
+$short = $calc->addPoints($start,$end,$path);
+var_dump($short);
 
 
 ?>
