@@ -30,9 +30,6 @@ class CalcPath{
         //Getting map in array
         $maparray = $this->map->getMapArray();
 
-        //Getting path in array
-        $path = $currentpath->getPath();
-
         //Setting available points
         $points = [
             [$currentpos[0] - 1, $currentpos[1]],
@@ -40,6 +37,18 @@ class CalcPath{
             [$currentpos[0], $currentpos[1] - 1],
             [$currentpos[0], $currentpos[1] + 1],
         ];
+
+        //Testing if end position is in points
+        foreach ($points as $point){
+            if ($point == $endpos){
+                $end = new Point($point[0],$point[1]);
+                $currentpath->addPoint($end);
+                var_dump($currentpath);
+                $this->currentpath = $currentpath;
+                unset($currentpath);
+                return $this->currentpath;
+            }
+        }
 
         //Treatment 
         foreach ($points as $point){
@@ -55,24 +64,13 @@ class CalcPath{
             if(in_array($test, $currentpath->getPath())){
                 continue;
             }
-
-            if($test === $endpoint){
-                $valid = $test;
-                $currentpath->addPoint($valid);
-                $this->currentpath = $currentpath;
-                var_dump($currentpath);
-                return $currentpath;
-
-            }
-            else{
-                $valid = $test;
-                $currentpath->addPoint($valid);
-                var_dump($currentpath);
-                unset($points);
-                $path = [];
-                unset($currentpos);
-                $this->addPoints($valid, $endpoint, $currentpath);
-            } 
+            
+            $currentpath->addPoint($test);
+            var_dump($currentpath);
+            unset($points);
+            unset($currentpos);
+            $this->addPoints($test, $endpoint, $currentpath);
+            
         } 
     }
         
@@ -102,46 +100,7 @@ class CalcPath{
         }
         
     }
-    public function testGetShortestPath(Point $point, Point $end, Path $path){
-        global $shortest;
 
-        if (!empty($shortest) && count($path->getPath()) >= count($shortest->getPath())){
-            return $shortest;
-        }
-
-
-        if($point->getAxeX() == $end->getAxeX() && $point->getAxeY() == $end->getAxeY()){
-            $shortest = $path;
-            return $path;
-        }
-
-        $currentpos = $point->getPosition();
-        $map = $this->map->getMapArray();
-
-        $points = [
-            [$currentpos[0] - 1, $currentpos[1]],
-            [$currentpos[0] + 1, $currentpos[1]],
-            [$currentpos[0], $currentpos[1] - 1],
-            [$currentpos[0], $currentpos[1] + 1],
-        ];
-
-        foreach ($points as $point) {
-            if ($point[0] < 0 || $point[1] < 0 || $point[0] >= count($map) || $point[1] >= count($map[0])) {
-                continue;
-            }
-            if (0 == $map[$point[0]][$point[1]]) {
-                continue;
-            }
-            if (in_array($point, $path->getPath())) {
-                continue;
-            }
-            $valid = new Point($point[0],$point[1]);
-            $path->addPoint($valid);
-            var_dump($valid);
-            $this->testGetShortestPath($valid, $end, $path);
-            
-        }
-    }
 }
 
 ?>
