@@ -20,7 +20,7 @@ $end = new Point(1,0);
 $calc = new CalcPath($map,$start,$end);
 $path = new Path($start);
 
-$short = $calc->addPoints($start,$end,$path);
+$short = $calc->testGetShortestPath($start,$end,$path);
 var_dump($short);
 
 
