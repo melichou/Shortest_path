@@ -47,6 +47,7 @@ class CalcPath{
             if ($point[0] < 0 || $point[1] < 0 || $point[0] >= count($maparray) || $point[1] >= count($maparray[0])){
                 continue;
             }
+
             if (($maparray[$point[0]][$point[1]]) == 0){
                 continue;
             }
@@ -54,6 +55,7 @@ class CalcPath{
             if(in_array($test, $currentpath->getPath())){
                 continue;
             }
+            
             if($test === $endpoint){
                 $valid = $test;
                 $currentpath->addPoint($valid);
@@ -71,9 +73,7 @@ class CalcPath{
                 unset($currentpos);
                 $this->addPoints($valid, $endpoint, $currentpath);
             }    
-            
-
-            
+              
 
         } 
     }
@@ -141,8 +141,6 @@ class CalcPath{
             var_dump($valid);
             $this->testGetShortestPath($valid, $end, $path);
         }
-
-
     
     }
 }
