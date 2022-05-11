@@ -16,12 +16,11 @@ $map = new Map([
 ]);
 $start = new Point(2,4);
 $end = new Point(1,0);
-
-$calc = new CalcPath($map,$start,$end);
 $path = new Path($start);
 
-$short = $calc->addPoints($start,$end,$path);
-var_dump($short);
+$calc = new CalcPath($map,$start,$end);
+$test = $calc->shortestPath($path);
+var_dump($test);
 
 
 ?>

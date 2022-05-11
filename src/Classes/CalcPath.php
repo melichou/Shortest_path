@@ -14,6 +14,8 @@ class CalcPath{
         $this->startpoint = $startpoint;
         $this->endpoint = $endpoint;
         $this->currentpath = new Path($startpoint);
+        $this->shortestpath = new Path($startpoint);
+
     }
 
     //Getters
@@ -43,63 +45,73 @@ class CalcPath{
             if ($point == $endpos){
                 $end = new Point($point[0],$point[1]);
                 $currentpath->addPoint($end);
-                var_dump($currentpath);
                 $this->currentpath = $currentpath;
-                unset($currentpath);
-                return $this->currentpath;
+                var_dump($currentpath);
+                exit;
             }
         }
 
         //Treatment 
         foreach ($points as $point){
+            //creating Point object
             $test = new Point($point[0], $point[1]);
+    
+            //testing if current point x or y is not < 0 and if current point is in map
             if ($point[0] < 0 || $point[1] < 0 || $point[0] >= count($maparray) || $point[1] >= count($maparray[0])){
                 continue;
             }
 
+            //testing if current position is not a blocked case in map
             if (($maparray[$point[0]][$point[1]]) == 0){
                 continue;
             }
                 
+            //testing if current point is not already in path
             if(in_array($test, $currentpath->getPath())){
                 continue;
             }
             
             $currentpath->addPoint($test);
-            var_dump($currentpath);
             unset($points);
             unset($currentpos);
+            var_dump($currentpath);
             $this->addPoints($test, $endpoint, $currentpath);
-            
-        } 
+        }
     }
-        
-    
-    
 
-    public function shortestPath(Path $currentpath){
+    public function shortestPath(Path $currentpath) {
         //attributes 
-        $endpos = $this->endpoint->getPosition();
-        if (!empty($this->shortestPath) && in_array($endpos,$this->shortestPath->getPath())){
-            $shortest = $this->shortestpath->getPath();
-            if ($currentpath < $shortest){
-                return $this->currentpath;
-            }
-            elseif ($currentpath > $shortest){
-                return $this->shortestpath;
-            }
-            else {
-                throw new Exception("Les deux chemins sont équidistances");
-            }
+        if (empty($this->shortestpath) || !(in_array($this->endpoint, $this->shortestpath->getPath())) ){
+            $this->shortestpath = $currentpath;
+            $newpath = new Path($this->startpoint);
+            $this->addPoints($this->startpoint,$this->endpoint,$newpath); 
         }
         else {
-            $this->shortestPath = $currentpath;
-            $newpath = new Path($this->startpoint);
-            $this->addPoints($this->startpoint,$this->endpoint,$newpath);
-            $this->shortestPath($this->currentpath);
+            $shortest = $this->shortestpath->getPath();
+            $current = $currentpath->getPath();
+            if (count($current) < count($shortest)){
+                return $this->currentpath;
+            }
+            else{
+                return $this->shortestpath;
+            }
         }
         
     }
+
+    public function getShortestPath(){
+        if (!empty($this->shortestpath) && !empty($this->currentpath)){
+            if(count($this->currentpath->getPath()) <= count($this->shortestpath->getPath())){
+                return $this->currentpath;
+            }
+            else{
+                return $this->shortestpath;
+            }
+        }
+
+    }
+
+
 
 }
 
