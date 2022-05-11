@@ -24,5 +24,4 @@ $short = $calc->testGetShortestPath($start,$end,$path);
 var_dump($short);
 
 
-
 ?>
