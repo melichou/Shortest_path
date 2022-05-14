@@ -23,6 +23,10 @@ class CalcPath{
         return $this->currentpath;
     }
 
+    public function getShortestPath() : Path{
+        return $this->shortestpath;
+    }
+
     //Functions 
     public function addPoints(Point $thispoint, Point $endpoint, Path $currentpath){
         //Getting position of current point
@@ -32,7 +36,7 @@ class CalcPath{
         //Getting map in array
         $maparray = $this->map->getMapArray();
 
-        //Setting available points
+        //Setting available points        
         $points = [
             [$currentpos[0] - 1, $currentpos[1]],
             [$currentpos[0] + 1, $currentpos[1]],
@@ -74,7 +78,7 @@ class CalcPath{
             $currentpath->addPoint($test);
             unset($points);
             unset($currentpos);
-            var_dump($currentpath);
+            //var_dump($currentpath);
             $this->addPoints($test, $endpoint, $currentpath);
         }
     }
@@ -89,7 +93,7 @@ class CalcPath{
         else {
             $shortest = $this->shortestpath->getPath();
             $current = $currentpath->getPath();
-            if (count($current) < count($shortest)){
+            if (count($current) <= count($shortest)){
                 return $this->currentpath;
             }
             else{
@@ -97,18 +101,6 @@ class CalcPath{
             }
         }
         
-    }
-
-    public function getShortestPath(){
-        if (!empty($this->shortestpath) && !empty($this->currentpath)){
-            if(count($this->currentpath->getPath()) <= count($this->shortestpath->getPath())){
-                return $this->currentpath;
-            }
-            else{
-                return $this->shortestpath;
-            }
-        }
-
     }
 
 }

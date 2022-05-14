@@ -18,9 +18,16 @@ $start = new Point(2,4);
 $end = new Point(1,0);
 $path = new Path($start);
 
+
 $calc = new CalcPath($map,$start,$end);
-$test = $calc->shortestPath($path);
-var_dump($test);
+$calc->shortestPath($path);
+
+$path = $calc->getCurrentPath();
+$shortest = $calc->getShortestPath();
+
+/*var_dump($path);
+var_dump($shortest);*/
+
 
 
 ?>
