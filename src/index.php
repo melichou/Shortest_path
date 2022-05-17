@@ -23,10 +23,11 @@ $calc = new CalcPath($map,$start,$end);
 $calc->shortestPath($path);
 
 $path = $calc->getCurrentPath();
-$shortest = $calc->getShortestPath();
+$shortest = $calc->isFounded();
 
-/*var_dump($path);
-var_dump($shortest);*/
+//var_dump($path);
+var_dump($shortest);
+echo "test";
 
 
 

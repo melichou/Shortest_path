@@ -7,6 +7,7 @@ class CalcPath{
     private Path $shortestpath;
     private Point $startpoint;
     private Point $endpoint;
+    private bool $founded = false;
 
     //Constructor
     public function __construct(Map $currentmap, Point $startpoint, Point $endpoint){
@@ -46,14 +47,43 @@ class CalcPath{
 
         //Testing if end position is in points
         foreach ($points as $point){
-            if ($point == $endpos){
-                $end = new Point($point[0],$point[1]);
-                $currentpath->addPoint($end);
+            $test = new Point($point[0], $point[1]);
+            if($point === $endpos){
+                //$end = new Point($point[0],$point[1]);
+                //$currentpath->addPoint($end);
+                $currentpath->addPoint($test);
                 $this->currentpath = $currentpath;
-                var_dump($currentpath);
+                //var_dump($currentpath);
+                //return $currentpath;
+                $this->founded = true;
                 exit;
             }
+            /*else{
+                if($point[0] < 0 || $point[1] < 0 || $point[0] >= count($maparray) || $point[1] >= count($maparray[0])) {
+                //testing if current point x or y is not < 0 and if current point is in map
+                continue;
+                }
+            
+                if(($maparray[$point[0]][$point[1]]) == 0){
+                //testing if current position is not a blocked case in map
+                continue;
+                }
+
+                if(in_array($test, $currentpath->getPath())){
+                //testing if current point is not already in path
+                continue;
+                }               
+                
+                $currentpath->addPoint($test);
+                unset($points);
+                unset($currentpos);
+                var_dump($currentpath);
+                $this->addPoints($test, $endpoint, $currentpath);
+            }*/     
         }
+        //return $currentpath;
+        
+        //}
 
         //Treatment 
         foreach ($points as $point){
@@ -103,6 +133,28 @@ class CalcPath{
         
     }
 
+    public function isFounded(){
+        if($this->founded == true){
+            if (empty($this->shortestpath) || !( in_array($this->endpoint, $this->shortestpath->getPath()) ) ){
+                $this->shortestpath = $this->currentpath;
+                $newpath = new Path($this->startpoint);
+                $this->addPoints($this->startpoint,$this->endpoint,$newpath); 
+            }
+            else {
+                $shortest = $this->shortestpath->getPath();
+                $current = $this->currentpath->getPath();
+                if (count($current) <= count($shortest)){
+                    return $this->currentpath;
+                }
+                else{
+                    return $this->shortestpath;
+                }
+            }        
+        }
+        else {
+            $this->addPoints($this->start, $this->end, $this->getCurrentPath());
+        }
+    }
 }
 
 ?>
