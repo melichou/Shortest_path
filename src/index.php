@@ -5,7 +5,7 @@ require_once "Classes/Map.php";
 require_once "Classes/Point.php";
 
 
-echo "test docker shortest path";
+
 
 $map = new Map([
     [1,1,1,1,1],
@@ -23,11 +23,7 @@ $calc = new CalcPath($map,$start,$end);
 $calc->shortestPath($path);
 
 $path = $calc->getCurrentPath();
-$shortest = $calc->isFounded();
 
-//var_dump($path);
-var_dump($shortest);
-echo "test";
 
 
 

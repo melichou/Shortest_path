@@ -1,5 +1,6 @@
 <?php
 require_once "Path.php";
+require_once "Display.php";
 class CalcPath{
     //Attributes 
     private Map $map;
@@ -27,6 +28,15 @@ class CalcPath{
     public function getShortestPath() : Path{
         return $this->shortestpath;
     }
+    public function getMap() : Map{
+        return $this->map;
+    }
+    public function getEnd(): Point{
+        return $this->endpoint;
+    }
+    public function getStart(): Point{
+        return $this->startpoint;
+    }
 
     //Functions 
     public function addPoints(Point $thispoint, Point $endpoint, Path $currentpath){
@@ -53,37 +63,14 @@ class CalcPath{
                 //$currentpath->addPoint($end);
                 $currentpath->addPoint($test);
                 $this->currentpath = $currentpath;
-                //var_dump($currentpath);
                 //return $currentpath;
                 $this->founded = true;
+                $disp = new Display($this);
+                $disp->displayMap();
                 exit;
             }
-            /*else{
-                if($point[0] < 0 || $point[1] < 0 || $point[0] >= count($maparray) || $point[1] >= count($maparray[0])) {
-                //testing if current point x or y is not < 0 and if current point is in map
-                continue;
-                }
-            
-                if(($maparray[$point[0]][$point[1]]) == 0){
-                //testing if current position is not a blocked case in map
-                continue;
-                }
-
-                if(in_array($test, $currentpath->getPath())){
-                //testing if current point is not already in path
-                continue;
-                }               
-                
-                $currentpath->addPoint($test);
-                unset($points);
-                unset($currentpos);
-                var_dump($currentpath);
-                $this->addPoints($test, $endpoint, $currentpath);
-            }*/     
         }
-        //return $currentpath;
-        
-        //}
+            
 
         //Treatment 
         foreach ($points as $point){
